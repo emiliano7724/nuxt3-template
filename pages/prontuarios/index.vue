@@ -5,7 +5,7 @@
 
       <v-row>
 
-        <v-col cols="6">
+        <v-col cols="4">
           <v-card prepend-icon="mdi-account-alert" elevation="16" :loading=false title="Buscar persona">
             <v-card-actions>
               <v-col cols="8">
@@ -41,7 +41,10 @@
                       bg-color=""
                   >
                     <v-tab value="one">Datos Filiatorios</v-tab>
-                    <v-tab value="two">Fotos</v-tab>
+                    <v-tab value="two">Fotos Gestion</v-tab>
+                    <v-tab value="three">Book Rostro</v-tab>
+                    <v-tab value="four">Book Dactilar</v-tab>
+
 
                   </v-tabs>
 
@@ -51,8 +54,9 @@
 
                         <card-datos
                             :nombre=prontuario.nombre
-                            :nroProntuario=prontuario.nroProntuario
-                            :fechaNacimiento=prontuario.fechaNacimiento
+                            :nroProntuario=prontuario.nro_prontuario
+                            :fechaNacimiento=prontuario.fecha_nacimiento
+                            :unidadRegional=prontuario.unidad_regional
                         >
 
                         </card-datos>
@@ -77,7 +81,15 @@
 
                       </v-window-item>
 
+                      <v-window-item value="three">
 
+                        <v-pagination></v-pagination>
+                      </v-window-item>
+
+                      <v-window-item value="four">
+
+                        <v-pagination></v-pagination>
+                      </v-window-item>
                     </v-window>
                   </v-card-text>
                 </v-card>
@@ -125,10 +137,13 @@
   });
 
   const loadingCardDatos=false;
+  const isVisibleDataProntuario=true;
+
   const isCargandoTabla=false;
   const isVisibleTabla=true;
+
   const isSearchingProntuario=false;
-  const isVisibleDataProntuario=true;
+
 
 
   const tipoIdentificacion = ref('Rostro');
@@ -151,11 +166,12 @@
   };
 
 
-  const items = [];
+  let items ;
   const prontuario = {
     nombre: "Emiliano Marquez",
-    nroProntuario: "5564445",
-    fechaNacimiento: "24/11/1988",
+    nro_prontuario: "5564445",
+    fecha_nacimiento: "24/11/1988",
+    unidad_regional: "UR I",
   };
   const rules = [
     value => {
@@ -164,12 +180,9 @@
     },
   ];
   const tab = ref('one');
-  let parametro = '';
+  let parametro = 'Emiliano marquez';
 
-  // Opciones para la petición HTTP
-  const options = {
-    url: "http://httpbin.org/anything"
-  };
+
 
   // Headers para la tabla
   const headers = [
@@ -180,13 +193,19 @@
       title: 'N° prontuario',
     },
     {key: 'nombre', title: 'Nombre'},
-    {key: 'fecha_nacimiento', title: 'Fecha Nacimiento',      sortable: false,}
+    {key: 'fecha_nacimiento', title: 'Fecha Nacimiento',      sortable: false,},
+    {key: 'unidad_regional', title: 'Unidad Regional',      sortable: false,},
+    {key: '', title: 'Acciones',      sortable: false,}
   ];
 
   // Función para buscar
   const buscar = () => {
-    items.value = [
-      // Puedes agregar objetos a 'items' según sea necesario
-    ];
+    items= [ {
+      nombre: "Emiliano Marquez",
+      nro_prontuario: "5564445",
+      fecha_nacimiento: "24/11/1988",
+      unidad_regional: "UR I",
+    }];
+console.log(items)
   };
   </script>

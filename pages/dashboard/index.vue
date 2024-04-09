@@ -13,10 +13,6 @@
         border
     >
 
-
-
-
-
     </v-card>
 
 
@@ -24,7 +20,7 @@
 
 </template>
 
-<script setup>
+<script setup >
 definePageMeta({
   middleware: 'auth'
 })
