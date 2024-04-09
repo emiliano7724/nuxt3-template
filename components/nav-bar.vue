@@ -2,12 +2,13 @@
 
     <v-app-bar
 
-        :elevation="19"
+        :elevation="8"
         color="info"
 
     >
       <template v-slot:prepend>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon ></v-app-bar-nav-icon>
+
       </template>
       <template v-slot:image>
         <v-img
@@ -33,6 +34,7 @@
       </v-btn>
       <!-- Puedes agregar más elementos de la barra de navegación según sea necesario -->
     </v-app-bar>
+
 
   <br><br><br><br>
 

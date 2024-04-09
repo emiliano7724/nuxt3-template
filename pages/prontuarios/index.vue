@@ -2,94 +2,112 @@
   <v-app>
     <nav-bar></nav-bar>
     <v-container>
+
       <v-row>
 
-        <v-col cols="3">
-          <v-card prepend-icon="mdi-account-alert" variant="outlined" :loading=false  title="Buscar persona">
+        <v-col cols="6">
+          <v-card prepend-icon="mdi-account-alert" elevation="16" :loading=false title="Buscar persona">
             <v-card-actions>
-              <v-col>
+              <v-col cols="8">
                 <v-form>
                   <v-text-field
                       v-model="parametro"
                       :rules="rules"
                       label="N° prontuario o Nombre"
+                      variant="outlined"
+
                   ></v-text-field>
-                  <v-btn @click="buscar" color="blue" append-icon="mdi-account-search" block>Buscar</v-btn>
                 </v-form>
+              </v-col>
+              <v-col cols="4"> <!-- Colocamos el botón de búsqueda en 4 columnas -->
+                <v-btn @click="buscar" variant="tonal" append-icon="mdi-account-search" block :loading=isSearchingProntuario>Buscar</v-btn>
               </v-col>
             </v-card-actions>
           </v-card>
         </v-col>
+        <v-col>
+          <div v-if=isVisibleDataProntuario>
+            <v-skeleton-loader
+                v-if=loadingCardDatos
+                type="card"
+                :elevation="13"
+            ></v-skeleton-loader>
+            <v-card v-else  elevation="16" :loading=false title="Prontuario Seleccionado">
+              <v-card-item>
 
-        <v-col cols="4">
+                <v-card>
+                  <v-tabs
+                      v-model=tab
+                      bg-color=""
+                  >
+                    <v-tab value="one">Datos Filiatorios</v-tab>
+                    <v-tab value="two">Fotos</v-tab>
 
-          <v-card :loading=false elevation="16">
+                  </v-tabs>
+
+                  <v-card-text>
+                    <v-window v-model=tab>
+                      <v-window-item value="one">
+
+                        <card-datos
+                            :nombre=prontuario.nombre
+                            :nroProntuario=prontuario.nroProntuario
+                            :fechaNacimiento=prontuario.fechaNacimiento
+                        >
+
+                        </card-datos>
+                      </v-window-item>
+
+                      <v-window-item value="two">
+                        <v-select
+                            v-model="tipoIdentificacion"
+                            label="Tipo"
+                            :items="tiposIdentificacion"
+                            variant="solo-inverted"
+                            @change="updatePerfilOptions"
+                        ></v-select>
+
+                        <!-- Segundo v-select para Perfil -->
+                        <v-select
+                            v-model="perfil"
+                            label="Perfil"
+                            :items="perfilOptions"
+                            variant="solo-inverted"
+                        ></v-select>
+
+                      </v-window-item>
+
+
+                    </v-window>
+                  </v-card-text>
+                </v-card>
+
+
+              </v-card-item>
+            </v-card>
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-row>
+
+        <v-col>
+          <v-card v-if=isVisibleTabla :loading=isCargandoTabla elevation="16">
             <data-table title="Resultados" :items=items :headers=headers></data-table>
 
           </v-card>
         </v-col>
 
 
-        <v-col cols="4">
 
-          <v-card elevation="16" :loading=false title="Prontuario Seleccionado">
-            <v-card-item>
-
-              <v-card>
-                <v-tabs
-                    v-model=tab
-                    bg-color=""
-                >
-                  <v-tab value="one">Datos Filiatorios</v-tab>
-                  <v-tab value="two">Fotos</v-tab>
-
-                </v-tabs>
-
-                <v-card-text>
-                  <v-window v-model=tab>
-                    <v-window-item value="one">
-
-                      <card-datos
-                          :nombre=prontuario.nombre
-                          :nroProntuario=prontuario.nroProntuario
-                          :fechaNacimiento=prontuario.fechaNacimiento
-                      >
-
-                      </card-datos>
-                    </v-window-item>
-
-                    <v-window-item value="two">
-                      <v-select
-                          v-model="tipoIdentificacion"
-                          label="Tipo"
-                          :items="tiposIdentificacion"
-                          variant="solo-inverted"
-                          @change="updatePerfilOptions"
-                      ></v-select>
-
-                      <!-- Segundo v-select para Perfil -->
-                      <v-select
-                          v-model="perfil"
-                          label="Perfil"
-                          :items="perfilOptions"
-                          variant="solo-inverted"
-                      ></v-select>
-
-                    </v-window-item>
-
-
-                  </v-window>
-                </v-card-text>
-              </v-card>
-
-
-            </v-card-item>
-          </v-card>
-        </v-col>
 
 
       </v-row>
+
     </v-container>
+
+
+
 
   </v-app>
 
@@ -102,9 +120,16 @@
     middleware: 'auth'
   });
   onMounted(() => {
-    // Llamar a la función para que se ejecute al principio
+
     updatePerfilOptions();
   });
+
+  const loadingCardDatos=false;
+  const isCargandoTabla=false;
+  const isVisibleTabla=true;
+  const isSearchingProntuario=false;
+  const isVisibleDataProntuario=true;
+
 
   const tipoIdentificacion = ref('Rostro');
   const perfil = ref('Derecho');
@@ -150,11 +175,12 @@
   const headers = [
     {
       align: 'start',
-      key: 'nroProntuario',
-      sortable: false,
+      key: 'nro_prontuario',
+      sortable: true,
       title: 'N° prontuario',
     },
-    {key: 'nombre', title: 'Nombre'}
+    {key: 'nombre', title: 'Nombre'},
+    {key: 'fecha_nacimiento', title: 'Fecha Nacimiento',      sortable: false,}
   ];
 
   // Función para buscar
@@ -163,4 +189,4 @@
       // Puedes agregar objetos a 'items' según sea necesario
     ];
   };
-</script>
+  </script>

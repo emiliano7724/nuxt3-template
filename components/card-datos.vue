@@ -1,25 +1,43 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" >
     <v-card-title class="flex-column align-start">
-      <div class="text-h4 mb-2">
+      <v-row justify="start">
+
+        <v-col cols="4">
+
         {{ nombre }}
-        <br>
-        <v-avatar color="grey" rounded="1" size="100">
+
+        <v-avatar color="grey" rounded="1" size="120">
           <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg" cover></v-img>
         </v-avatar>
-      </div>
-      <div class="text-h6 font-weight-regular text-grey">
+        </v-col>
+        <v-col>
         Prontuario N°:
         <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
           {{ nroProntuario }}
         </v-chip>
-      </div>
-      <div class="text-h6 font-weight-regular text-grey">
-        Fecha nacimiento:
-        <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
-          {{ fechaNacimiento }}
-        </v-chip>
-      </div>
+        </v-col>
+        </v-row>
+      <v-row>
+
+        <v-col>
+
+          Fecha nacimiento:
+          <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
+            {{ fechaNacimiento }}
+          </v-chip>
+
+        </v-col>
+        <v-col  >
+
+          Unidad Regional:
+          <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
+     UR I
+          </v-chip>
+
+        </v-col>
+      </v-row>
+
     </v-card-title>
 
     <v-divider class="mx-4"></v-divider>
