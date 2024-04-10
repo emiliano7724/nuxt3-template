@@ -3,7 +3,7 @@
     <v-app-bar
 
         :elevation="8"
-        color="info"
+        color="primary"
 
     >
       <template v-slot:prepend>
@@ -11,9 +11,7 @@
 
       </template>
       <template v-slot:image>
-        <v-img
-            gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
-        ></v-img>
+
       </template>
       <v-toolbar-title>Consulta Prontuario</v-toolbar-title>
       <v-spacer></v-spacer>

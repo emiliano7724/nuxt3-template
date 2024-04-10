@@ -18,22 +18,37 @@
       :headers="headers"
       :items="items"
       :search="search"
-    ></v-data-table>
+      no-data-text="No se encontraron datos"
+    >
+      <template v-slot:item.acciones="{ item }">
+        <v-btn @click="verCardInfo(item)" color="primary" >
+          Ver
+        </v-btn>
+        <v-btn  @click="verBookFotos(item)" variant="outlined" >
+          Fotos
+        </v-btn>
+      </template>
+    </v-data-table>
+
   </v-card>
 </template>
-<script>
-  export default {
-    props: {
-      items: Array,
-      headers: Array
+<script setup>
+const emit = defineEmits(['loading'])
+ defineProps({
+       items: Array ,
+       headers: Array,
+       loadingCardDatos: Boolean // Se agrega la propiedad loadingCardDatos
+ })
+ const search=''
+const verCardInfo = (item) => {
 
-    },
-    data () {
+  emit('loading', true); // Emitir evento para cambiar loadingCardDatos a false
 
-      return {
-        search: '',
+}
 
-      }
-    },
-  }
+
+
+
+
+
 </script>
