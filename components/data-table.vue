@@ -36,13 +36,12 @@
 const emit = defineEmits(['loading'])
  defineProps({
        items: Array ,
-       headers: Array,
-       loadingCardDatos: Boolean // Se agrega la propiedad loadingCardDatos
+       headers: Array
  })
  const search=''
 const verCardInfo = (item) => {
 
-  emit('loading', true); // Emitir evento para cambiar loadingCardDatos a false
+  emit('loading', true);
 
 }
 

@@ -5,8 +5,8 @@
 
       <v-row>
 
-        <v-col cols="4">
-          <v-card prepend-icon="mdi-account-alert" elevation="16" :loading=false title="Buscar persona">
+        <v-col cols="6">
+          <v-card variant="outlined" prepend-icon="mdi-account-alert" elevation="16" :loading=false title="Buscar persona">
             <v-card-actions>
               <v-col cols="8">
                 <v-form>
@@ -19,7 +19,7 @@
                   ></v-text-field>
                 </v-form>
               </v-col>
-              <v-col cols="4"> <!-- Colocamos el botón de búsqueda en 4 columnas -->
+              <v-col cols="4">
                 <v-btn
                     @click="buscar"
                     variant="tonal"
@@ -32,7 +32,52 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col>
+        <v-col cols="6">
+          <div v-if=isVisibleDataProntuario>
+            <v-skeleton-loader
+                v-if=loadingCardDatos
+                type="card"
+                :elevation="13"
+            ></v-skeleton-loader>
+
+            <v-card v-else elevation="16" :loading="false"
+                    :title="'Prontuario Seleccionado: ' + prontuario.nro_prontuario">
+
+              <v-card-item>
+
+                <v-card-text>
+
+                  <card-datos
+                      :nombre=prontuario.nombre
+                      :nroProntuario=prontuario.nro_prontuario
+                      :fechaNacimiento=prontuario.fecha_nacimiento
+                      :unidadRegional=prontuario.unidad_regional
+                  >
+
+                  </card-datos>
+                  <v-expansion-panels>
+                    <v-expansion-panel
+                        title="Mas info"
+                        text="Mas info por aca"
+                    >
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+
+
+                </v-card-text>
+                </v-card-item>
+            </v-card>
+
+          </div>
+        </v-col>
+
+
+      </v-row>
+
+      <v-row>
+        <v-col cols="6">
+
+
           <v-card v-if=isVisibleTabla :loading=isCargandoTabla elevation="16">
             <data-table
                 title="Resultados"
@@ -46,17 +91,17 @@
           </v-card>
         </v-col>
 
-      </v-row>
-
-      <v-row>
-        <v-col>
+        <v-col cols="6">
           <div v-if=isVisibleDataProntuario>
             <v-skeleton-loader
                 v-if=loadingCardDatos
                 type="card"
                 :elevation="13"
             ></v-skeleton-loader>
-            <v-card v-else elevation="16" :loading=false title="Prontuario Seleccionado">
+
+            <v-card v-else elevation="16" :loading="false"
+                    title="Fotos">
+
               <v-card-item>
 
                 <v-card>
@@ -64,29 +109,19 @@
                       v-model=tab
                       bg-color=""
                   >
-                    <v-tab value="one">Datos Filiatorios</v-tab>
-                    <v-tab value="two">Fotos Gestion</v-tab>
-                    <v-tab value="three">Book Rostro</v-tab>
-                    <v-tab value="four">Book Dactilar</v-tab>
+
+                    <v-tab value="one">Fotos Gestion</v-tab>
+                    <v-tab value="two">Book Rostro</v-tab>
+                    <v-tab value="three">Book Dactilar</v-tab>
 
 
                   </v-tabs>
 
                   <v-card-text>
                     <v-window v-model=tab>
+
+
                       <v-window-item value="one">
-
-                        <card-datos
-                            :nombre=prontuario.nombre
-                            :nroProntuario=prontuario.nro_prontuario
-                            :fechaNacimiento=prontuario.fecha_nacimiento
-                            :unidadRegional=prontuario.unidad_regional
-                        >
-
-                        </card-datos>
-                      </v-window-item>
-
-                      <v-window-item value="two">
                         <v-select
                             v-model="tipoIdentificacion"
                             label="Tipo"
@@ -105,12 +140,12 @@
 
                       </v-window-item>
 
-                      <v-window-item value="three">
+                      <v-window-item value="two">
 
                         <v-pagination></v-pagination>
                       </v-window-item>
 
-                      <v-window-item value="four">
+                      <v-window-item value="three">
 
                         <v-pagination></v-pagination>
                       </v-window-item>
@@ -123,7 +158,6 @@
             </v-card>
           </div>
         </v-col>
-
 
 
       </v-row>
@@ -146,7 +180,7 @@ onMounted(() => {
   updatePerfilOptions();
 });
 
-const loadingCardDatos =ref(false)
+const loadingCardDatos = ref(false)
 const isVisibleDataProntuario = ref(false);
 
 const isCargandoTabla = ref(false);
@@ -222,7 +256,7 @@ const headers = [
 // Función para buscar
 const buscar = () => {
   isSearchingProntuario.value = true
-  isCargandoTabla.value=true;
+  isCargandoTabla.value = true;
 
   // Simular una espera de 2 segundos antes de agregar los elementos
   setTimeout(() => {
@@ -241,20 +275,20 @@ const buscar = () => {
         }
     );
 
-    isVisibleTabla.value=true;
+    isVisibleTabla.value = true;
     isSearchingProntuario.value = false;
-    isCargandoTabla.value=false;
+    isCargandoTabla.value = false;
   }, 1500);
 
 };
-  const toggleLoadingCardDatos = (value) => {
-    isVisibleDataProntuario.value=true
-    loadingCardDatos.value = value;
-    setTimeout(() => {
-      loadingCardDatos.value=!value;
-    },1500);
+const toggleLoadingCardDatos = (value) => {
+  isVisibleDataProntuario.value = true
+  loadingCardDatos.value = value;
+  setTimeout(() => {
+    loadingCardDatos.value = !value;
+  }, 1500);
 
-  };
+};
 
 
 </script>

@@ -2,14 +2,17 @@
 
     <v-app-bar
 
-        :elevation="8"
-        color="primary"
+        :elevation="16"
+
 
     >
-      <template v-slot:prepend>
-        <v-app-bar-nav-icon ></v-app-bar-nav-icon>
+      <v-img
+          :width="273"
+          aspect-ratio="16/9"
+          cover
+          src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+      ></v-img>
 
-      </template>
       <template v-slot:image>
 
       </template>

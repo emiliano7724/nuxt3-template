@@ -1,25 +1,22 @@
 <template>
   <v-card class="mx-auto">
     <v-card-title class="flex-column align-start">
-    <v-row>
-  <v-col cols="4">
-    <div class="text-h4 mb-2">
-      {{ nombre }}
-      <br>
-      <v-avatar color="grey" rounded="1" size="100">
-      <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg" cover></v-img>
-    </v-avatar>
+      <v-row>
+        <v-col cols="2">
+          <v-avatar color="grey" rounded="1" size="100"
+          >
+            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg" cover></v-img>
+          </v-avatar>
+        </v-col>
+        <v-col cols="4">
+          <div class="text-h4 mb-2">
 
-    </div>
-  </v-col>
-      <v-col cols="6">
 
-          <div class="data-item">
-            <span class="label">Prontuario N°:</span>
-            <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
-              {{ nroProntuario }}
-            </v-chip>
+
           </div>
+        </v-col>
+        <v-col cols="6">
+
           <div class="data-item">
             <span class="label">Fecha de Nacimiento:</span>
             <v-chip size="x-large" color="indigo" prepend-icon="mdi-receipt" @click="lights">
@@ -33,8 +30,8 @@
             </v-chip>
           </div>
 
-      </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
 
       <v-divider class="mx-10"></v-divider>
 
